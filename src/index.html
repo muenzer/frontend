@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Volunteerli</title>
+    <link rel="stylesheet" href="assets/css/angular-material.min.css" />
+  </head>
+  <body ng-cloak ng-app="app" layout="column" layout-fill>
+    <md-toolbar md-whiteframe="4">
+      <div class="md-toolbar-tools">
+        <!-- <h2 md-truncate flex>Page Name</h2> -->
+
+        <md-button ui-sref="public.tasks">
+          <img style="height:30px" src="assets/images/volunteerli_logo.png" alt="Volunteerli" />
+        </md-button>
+        <span flex></span>
+        <md-button id="profile" ui-sref="public.profile" class="md-icon-button" aria-label="Log In">
+          <md-icon md-font-icon="fa fa-user-o fa-2x"></md-icon>
+        </md-button>
+        <login-widget></login-widget>
+      </div>
+    </md-toolbar>
+    <!-- <md-toolbar md-whiteframe="1">
+      <h2 md-truncate flex>My App's Title</h2>
+      <div layout="row" layout-align="end start" layout-padding>
+        <div flex="nogrow">
+          <img style="height:30px" src="volunteerli_logo.png" alt="Volunteerli" />
+        </div>
+      </div>
+    </md-toolbar> -->
+    <md-content layout-padding>
+      <ui-view></ui-view>
+    </md-content>
+    </div>
+
+
+    <!-- <div class="intro red z-depth-1">
+      <img src="volunteerli_logo.png" alt="Volunteerli" />
+
+    </div>
+    <div class="container" ng-app="app">
+
+      <ui-view></ui-view>
+    </div> -->
+
+    <script src="js/bundle.js"></script>
+  </body>
+</html>
