@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "istanbul cover --root lib -x '**/*[sS]pec.js' --include-all-sources jasmine",
     "start": "gulp",
     "build": "gulp build"
   },
@@ -20,6 +20,8 @@
     "gulp-jshint": "^2.1.0",
     "gulp-livereload": "^3.8.1",
     "gulp-util": "^3.0.8",
+    "istanbul": "^0.4.5",
+    "jasmine": "^2.8.0",
     "standard": "^10.0.3",
     "tiny-lr": "^1.0.5"
   },
@@ -30,6 +32,7 @@
     "angular-animate": "^1.6.8",
     "angular-aria": "^1.6.8",
     "angular-material": "^1.1.5",
-    "angular-messages": "^1.6.8"
+    "angular-messages": "^1.6.8",
+    "restangular": "^1.6.1"
   }
 }
