@@ -4,6 +4,7 @@ var gulp = require('gulp')
 var browserify = require('gulp-browserify')
 var concat = require('gulp-concat')
 var clean = require('gulp-clean')
+var flatten = require('gulp-flatten')
 
 // Modules for webserver and livereload
 var express = require('express')
@@ -63,7 +64,8 @@ gulp.task('templates', function () {
 
   // Any other template files
   gulp.src(['src/**/*.html', '!src/index.html'])
-  // Will be put in the dist/views folder
+  .pipe(flatten())
+  // Will be put in the dist/templates folder
   .pipe(gulp.dest('dist/templates/'))
 
   gulp.src('src/assets/**/*')
@@ -83,7 +85,7 @@ gulp.task('watch', function () {
   refresh.listen(livereloadport)
 
   // Watch our scripts, and when they change run lint and browserify
-  gulp.watch('src/scripts/**/*', [
+  gulp.watch(['src/scripts/**/*.js', '!src/scripts/**/*.spec.js'], [
     'browserify'
   ])
   // Watch our sass files
