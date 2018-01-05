@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "istanbul cover --root lib -x '**/*[sS]pec.js' --include-all-sources jasmine",
+    "test": "istanbul cover --root src/scripts -x '**/*[sS]pec.js' --include-all-sources jasmine",
     "start": "gulp",
     "build": "gulp build"
   },
