@@ -1,12 +1,18 @@
 'use strict'
 
-module.exports = function (api) {
-  var $service = this
+module.exports = function (api, $window) {
+  var service = {
+    get: get
+  }
 
-  $service.get = function (credintials) {
+  return service
+
+  function get (credintials) {
     return api.login(credintials)
     .then(function (response) {
-      return response.data.user.token
+      var token = response.user.token
+      $window.localStorage.setItem('accessToken', token)
+      return token
     })
   }
 }
