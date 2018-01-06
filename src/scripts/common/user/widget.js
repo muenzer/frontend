@@ -1,13 +1,10 @@
 'use strict'
 
-var WidgetCtrl = function (loginDialogService, tokenService) {
+var WidgetCtrl = function (loginDialogService) {
   var vm = this
 
   vm.open = function () {
     return loginDialogService.open()
-      .then(function (credintials) {
-        return tokenService.get(credintials)
-      })
   }
 }
 module.exports = WidgetCtrl

@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function ($mdDialog) {
+module.exports = function ($mdDialog, api, tokenService) {
   var dialog = {
     clickOutsideToClose: true,
     templateUrl: 'templates/loginDialog.html',
@@ -17,6 +17,12 @@ module.exports = function ($mdDialog) {
 
   function open () {
     return $mdDialog.show(dialog)
+    .then(function (credentials) {
+      return api.login(credentials)
+    })
+    .then(function (token) {
+      return tokenService.save(token)
+    })
   }
 
   function LoginDialogController ($mdDialog) {

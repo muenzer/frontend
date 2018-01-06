@@ -9,6 +9,10 @@ var apiService = function (Restangular) {
 
   function login (credintials) {
     return Restangular.all('users').all('login').post(credintials)
+    .then(function (response) {
+      var token = response.user.token
+      return token
+    })
   }
 }
 

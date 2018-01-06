@@ -15,17 +15,13 @@ describe('user module', () => {
       var WidgetCtrl = require('./widget')
 
       var loginDialogService = jasmine.createSpyObj('loginDialogService', ['open'])
-      var tokenService = jasmine.createSpyObj('tokenService', ['get'])
+      loginDialogService.open.and.returnValue(Promise.resolve('xxx'))
 
-      loginDialogService.open.and.returnValue(Promise.resolve(mockCredintials))
-      tokenService.get.and.returnValue(Promise.resolve('xxx'))
-
-      var widgetCtrl = new WidgetCtrl(loginDialogService, tokenService)
+      var widgetCtrl = new WidgetCtrl(loginDialogService)
 
       widgetCtrl.open()
       .then(function (response) {
         expect(loginDialogService.open).toHaveBeenCalled()
-        expect(tokenService.get).toHaveBeenCalled()
         done()
       })
       .catch(function (err) {
@@ -34,54 +30,61 @@ describe('user module', () => {
       })
     })
 
-    it('opens a dialog box', (done) => {
-      var Dialog = require('./dialog')
+    describe('dialog box', () => {
+      it('opens a dialog box', (done) => {
+        var Dialog = require('./dialog')
 
-      var $mdDialog = jasmine.createSpyObj('$mdDialog', ['show'])
-      $mdDialog.show.and.returnValue(Promise.resolve(mockCredintials))
-      var dialog = new Dialog($mdDialog)
+        var $mdDialog = jasmine.createSpyObj('$mdDialog', ['show'])
+        $mdDialog.show.and.returnValue(Promise.resolve(mockCredintials))
 
-      dialog.open()
-      .then(function (credintials) {
-        expect(credintials.user.email).toBe(email)
-        expect(credintials.user.password).toBe(password)
-        done()
+        var tokenService = jasmine.createSpyObj('tokenService', ['save'])
+        tokenService.save.and.returnValue(Promise.resolve('xxx'))
+
+        var apiService = {
+          login: function () {
+            return Promise.resolve('xxx')
+          }
+        }
+
+        var dialog = new Dialog($mdDialog, apiService, tokenService)
+
+        dialog.open()
+        .then(function (credintials) {
+          expect(tokenService.save).toHaveBeenCalled()
+          done()
+        })
+      })
+
+      it('cancels a dialog box', () => {
+        fail()
+      })
+
+      it('fails the login', () => {
+        fail()
       })
     })
 
-    it('gets a token', (done) => {
-      var Token = require('./token.js')
+    describe('auth service', () => {
+      it('event:auth-loginRequired calls the login and gets a token', (done) => {
+        var AuthEventService = require('./auth')
 
-      var mockApiResponse = {
-        user: {
-          email: email,
-          token: 'xxx'
+        var dialogService = {
+          open: function () {
+            return Promise.resolve(null)
+          }
         }
-      }
 
-      var credintials = {
-        user: {
-          email: email,
-          password: password
+        var authService = {
+          loginConfirmed: jasmine.createSpy()
         }
-      }
 
-      var api = jasmine.createSpyObj('api', ['login'])
-      api.login.and.returnValue(Promise.resolve(mockApiResponse))
+        var auth = new AuthEventService(dialogService, authService)
 
-      var $window = {
-        localStorage: {
-          setItem: jasmine.createSpy()
-        }
-      }
-
-      var token = new Token(api, $window)
-
-      token.get(credintials)
-      .then(function (token) {
-        expect(token).toBeDefined()
-        expect($window.localStorage.setItem).toHaveBeenCalledWith('accessToken', 'xxx')
-        done()
+        auth.loginRequired()
+        .then(function (response) {
+          expect(authService.loginConfirmed).toHaveBeenCalled()
+          done()
+        })
       })
     })
   })
