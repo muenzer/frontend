@@ -2,7 +2,8 @@
 
 var apiService = function (Restangular) {
   var service = {
-    login: login
+    login: login,
+    tasks: Restangular.service('tasks')
   }
 
   return service
