@@ -47,7 +47,7 @@ describe('dialog box', () => {
       expect($mdDialog.hide).toHaveBeenCalled()
     })
 
-    xit('fails the login', (done) => {
+    it('fails the login', (done) => {
       var apiService = {
         login: function () {
           return Promise.reject({
