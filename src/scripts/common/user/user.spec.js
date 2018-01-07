@@ -1,15 +1,5 @@
 /* eslint-env jasmine */
 describe('user module', () => {
-  var email = 'bob@bob.com'
-  var password = 'abc123'
-
-  var mockCredintials = {
-    user: {
-      email: email,
-      password: password
-    }
-  }
-
   describe('login', () => {
     it('controls a button', (done) => {
       var WidgetCtrl = require('./widget')
@@ -27,40 +17,6 @@ describe('user module', () => {
       .catch(function (err) {
         fail(err.message)
         done()
-      })
-    })
-
-    describe('dialog box', () => {
-      it('opens a dialog box', (done) => {
-        var Dialog = require('./dialog')
-
-        var $mdDialog = jasmine.createSpyObj('$mdDialog', ['show'])
-        $mdDialog.show.and.returnValue(Promise.resolve(mockCredintials))
-
-        var tokenService = jasmine.createSpyObj('tokenService', ['save'])
-        tokenService.save.and.returnValue(Promise.resolve('xxx'))
-
-        var apiService = {
-          login: function () {
-            return Promise.resolve('xxx')
-          }
-        }
-
-        var dialog = new Dialog($mdDialog, apiService, tokenService)
-
-        dialog.open()
-        .then(function (credintials) {
-          expect(tokenService.save).toHaveBeenCalled()
-          done()
-        })
-      })
-
-      it('cancels a dialog box', () => {
-        fail()
-      })
-
-      it('fails the login', () => {
-        fail()
       })
     })
 
