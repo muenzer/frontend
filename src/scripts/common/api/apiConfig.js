@@ -11,8 +11,7 @@ var apiConfig = function (Restangular, API) {
       extractedData = data[what]
       extractedData.count = data.count
     } else {
-      // extractedData = data[what]
-      extractedData = data
+      extractedData = data[Object.keys(data)[0]]
     }
     return extractedData
   })
