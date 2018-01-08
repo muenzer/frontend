@@ -1,18 +1,28 @@
 'use strict'
 
-module.exports = function (api, $window) {
+module.exports = function ($window) {
+  var tokenAddress = 'accessToken'
+
   var service = {
-    get: get
+    save: save,
+    retrieve: retrieve,
+    remove: remove
   }
 
   return service
 
-  function get (credintials) {
-    return api.login(credintials)
-    .then(function (response) {
-      var token = response.user.token
-      $window.localStorage.setItem('accessToken', token)
-      return token
-    })
+  function save (token) {
+    $window.localStorage.setItem(tokenAddress, token)
+    return token
+  }
+
+  function retrieve () {
+    var token = $window.localStorage.getItem(tokenAddress)
+    return token
+  }
+
+  function remove () {
+    $window.localStorage.removeItem(tokenAddress)
+    return 'removed'
   }
 }

@@ -1,6 +1,8 @@
 'use strict'
 
-module.exports = function ($mdDialog) {
+var LoginDialogController = require('./dialogCtrl')
+
+module.exports = function ($mdDialog, api, tokenService) {
   var dialog = {
     clickOutsideToClose: true,
     templateUrl: 'templates/loginDialog.html',
@@ -17,19 +19,5 @@ module.exports = function ($mdDialog) {
 
   function open () {
     return $mdDialog.show(dialog)
-  }
-
-  function LoginDialogController ($mdDialog) {
-    var $ctrl = this
-
-    $ctrl.hide = function () {
-      $mdDialog.hide()
-    }
-    $ctrl.close = function () {
-      $mdDialog.cancel()
-    }
-    $ctrl.login = function () {
-      $mdDialog.hide({user: { email: this.email, password: this.password }})
-    }
   }
 }
