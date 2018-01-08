@@ -11,7 +11,7 @@ var AuthEventService = require('./auth')
 app.factory('AuthEventService', AuthEventService)
 
 app.run(function ($rootScope, AuthEventService) {
-  $rootScope.$on('event:auth-loginRequired', function (AuthEventService) {
+  $rootScope.$on('event:auth-loginRequired', function () {
     AuthEventService.loginRequired()
   })
 })
