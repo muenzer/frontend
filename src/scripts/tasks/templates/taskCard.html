@@ -2,6 +2,7 @@
   <md-card-title>
     <md-card-title-text>
       <span class="md-headline">{{vm.task.project.name}}</span>
+      <span class="md-headline">{{vm.task.status}}</span>
       <span class="md-subhead">{{vm.task.project.organization}}</span>
     </md-card-title-text>
     <md-card-title-media>
@@ -12,7 +13,10 @@
     {{vm.task.name}}
   </md-card-content>
   <md-card-actions layout="row" layout-align="spread center">
-    <md-button ui-sref="public.task-detail({'id': vm.task.id})" class="md-raised md-primary">Accept</md-button>
+    <md-button ng-show="vm.task.status == 'shown'" ng-click="vm.update(vm.task.work())" class="md-raised md-primary">Accept</md-button>
+    <md-button ng-show="vm.task.status == 'working'" ng-click="vm.update(vm.task.submit())" class="md-raised md-primary">Submit</md-button>
+    <md-button ng-show="vm.task.status == 'working'" ng-click="vm.update(vm.task.cancel())" class="md-raised">Cancel</md-button>
+    <md-button ng-show="vm.task.status == 'submitted'" ng-click="vm.update(vm.task.approve())" class="md-raised md-primary">Approve</md-button>
     <md-card-icon-actions>
       <md-button class="md-icon-button md-ink-ripple" aria-label="toggle" ng-click="vm.expanded = !vm.expanded">
         <md-icon ng-show="vm.expanded" md-font-icon="fa fa-angle-down fa-2x"></md-icon>
