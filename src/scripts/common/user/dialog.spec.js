@@ -26,8 +26,10 @@ describe('dialog box', () => {
 
     it('submits a dialog box', (done) => {
       var apiService = {
-        login: function () {
-          return Promise.resolve('xxx')
+        users: {
+          login: function () {
+            return Promise.resolve('xxx')
+          }
         }
       }
 
@@ -49,10 +51,12 @@ describe('dialog box', () => {
 
     it('fails the login', (done) => {
       var apiService = {
-        login: function () {
-          return Promise.reject({
-            data: 'The credentials provided were invalid.'
-          })
+        users: {
+          login: function () {
+            return Promise.reject({
+              data: 'The credentials provided were invalid.'
+            })
+          }
         }
       }
 
