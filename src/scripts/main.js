@@ -4,12 +4,14 @@ var angular = require('angular')
 var ngMaterial = require('angular-material')
 var common = require('./common')
 var tasks = require('./tasks')
+var profile = require('./profile')
 
 angular.module('app',
   [
     ngMaterial,
     common,
-    tasks
+    tasks,
+    profile
   ])
   .config(IconConfig)
 
