@@ -34,8 +34,8 @@ describe('users api service', () => {
     })
 
     it('returns a promise', () => {
-      expect(usersService.login().then).toBeDefined()
-      expect(usersService.login().catch).toBeDefined()
+      expect(usersService.login({}).then).toBeDefined()
+      expect(usersService.login({}).catch).toBeDefined()
     })
 
     it('calls the $http post service', (done) => {
@@ -51,6 +51,10 @@ describe('users api service', () => {
         expect($http.post).toHaveBeenCalledWith('apiroot/users/login', credentials)
         done()
       })
+      .catch((err) => {
+        fail(err)
+        done()
+      })
     })
 
     it('error if no credentials are provided', (done) => {
@@ -59,7 +63,7 @@ describe('users api service', () => {
         fail()
         done()
       })
-      .catch(function (err) {
+      .catch((err) => {
         expect(err.message).toBe('no credentials provided')
         done()
       })
@@ -75,6 +79,10 @@ describe('users api service', () => {
       usersService.login(credentials)
       .then(function (token) {
         expect(token).toBe('xxx')
+        done()
+      })
+      .catch((err) => {
+        fail(err)
         done()
       })
     })
