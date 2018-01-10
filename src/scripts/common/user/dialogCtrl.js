@@ -12,7 +12,7 @@ module.exports = function LoginDialogController ($mdDialog, api, tokenService) {
   vm.login = function () {
     var credentials = {user: { email: this.email, password: this.password }}
 
-    return api.login(credentials)
+    return api.users.login(credentials)
     .then(function (token) {
       return tokenService.save(token)
     })
