@@ -30,6 +30,6 @@ UsersService.prototype.login = function (credentials) {
 UsersService.prototype.userInfo = function () {
   return httpService.get(joinUrlElements(root, 'users'))
   .then(function (response) {
-    return response.data.user
+    return response.data.profile
   })
 }

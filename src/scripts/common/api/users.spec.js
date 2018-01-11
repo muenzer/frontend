@@ -91,15 +91,15 @@ describe('users api service', () => {
   describe('userInfo', () => {
     var userInfo
 
-    var user = {
-      user: {
+    var profile = {
+      profile: {
         name: 'bob'
       }
     }
 
     beforeEach(() => {
       $http = jasmine.createSpyObj('http', ['get', 'post'])
-      $http.get.and.returnValue(Promise.resolve({data: user}))
+      $http.get.and.returnValue(Promise.resolve({data: profile}))
       usersService = new UsersService($http, 'apiroot')
       userInfo = usersService.userInfo()
     })

@@ -14,3 +14,11 @@ describe('profile module', () => {
     })
   })
 })
+
+describe('profile controller', () => {
+  var ProfileCtrl = require('./profile.controller')
+
+  it('provides a function', () => {
+    expect(typeof ProfileCtrl).toBe('function')
+  })
+})
