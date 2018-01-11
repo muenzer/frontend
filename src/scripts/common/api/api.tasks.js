@@ -36,6 +36,19 @@ TasksService.prototype.get = function (id) {
   })
 }
 
+TasksService.prototype.userTasks = function () {
+  return httpService.get(joinUrlElements(root, 'users', 'tasks'))
+  .then(function (response) {
+    var tasks = response.data.tasks
+
+    for (var i = 0, len = tasks.length; i < len; i++) {
+      tasks[i] = new Task(tasks[i])
+    }
+
+    return tasks
+  })
+}
+
 function Task (response) {
   var task = this
   Object.keys(response).forEach(function (key) {
