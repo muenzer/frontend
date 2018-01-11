@@ -13,6 +13,9 @@ module.exports = function setRoute ($stateProvider) {
         api: 'api',
         profile: function (api) {
           return api.users.userInfo()
+        },
+        tasks: function (api) {
+          return api.tasks.userTasks()
         }
       }
     }
