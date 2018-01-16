@@ -56,9 +56,18 @@ function Task (response) {
   })
 }
 
-Task.prototype.post = function (method) {
+Task.prototype.post = function (method, data) {
   var id = this.id
-  return httpService.post(joinUrlElements(root, 'tasks', id, method))
+
+  var p
+
+  if (data) {
+    p = httpService.post(joinUrlElements(root, 'tasks', id, method), data)
+  } else {
+    p = httpService.post(joinUrlElements(root, 'tasks', id, method))
+  }
+
+  return p
   .then(function (response) {
     return new Task(response.data.task)
   })
@@ -74,4 +83,8 @@ Task.prototype.cancel = function () {
 
 Task.prototype.submit = function () {
   return this.post('submit')
+}
+
+Task.prototype.respond = function (response) {
+  return this.post('respond', response)
 }

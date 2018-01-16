@@ -314,6 +314,80 @@ describe('tasks api service', () => {
     })
   })
 
+  describe('task method respond', () => {
+    var respond
+    var data
+    beforeEach(() => {
+      var mockTask = {
+        'task':
+        {
+          'name': 'Create an Event Volunteer Sign Up Sheet to be posted in the Springfield Food Pantry Office and posted on the food pantry’s facebook page.',
+          'status': 'working',
+          'id': 2
+        }
+      }
+
+      var mockTaskSubmitted = {
+        'task':
+        {
+          'name': 'Create an Event Volunteer Sign Up Sheet to be posted in the Springfield Food Pantry Office and posted on the food pantry’s facebook page.',
+          'status': 'working',
+          'id': 2,
+          'response': {
+            'abc123': {
+              'comment': 'foo',
+              'files': []
+            }
+          }
+        }
+      }
+
+      data = {
+        'comment': 'foo',
+        'files': []
+      }
+
+      $http = jasmine.createSpyObj('http', ['get', 'post'])
+      $http.get.and.returnValue(Promise.resolve({data: mockTask}))
+      $http.post.and.returnValue(Promise.resolve({data: mockTaskSubmitted}))
+      tasksService = new TasksService($http, 'apiroot')
+
+      respond = tasksService.get(2)
+      .then(function (task) {
+        return task.respond(data)
+      })
+    })
+
+    it('returns a promise', () => {
+      expect(respond.then).toBeDefined()
+      expect(respond.catch).toBeDefined()
+    })
+
+    it('calls the $http post service', (done) => {
+      respond
+      .then(function (response) {
+        expect($http.post).toHaveBeenCalled()
+        expect($http.post).toHaveBeenCalledWith('apiroot/tasks/2/respond', data)
+        done()
+      })
+      .catch((err) => {
+        console.log(err)
+        fail()
+        done()
+      })
+    })
+
+    it('it returns a task type', (done) => {
+      respond
+      .then(function (task) {
+        expect(task).toBeTruthy()
+        expect(task.constructor.name).toBe('Task')
+        expect(task.response).toBeDefined()
+        done()
+      })
+    })
+  })
+
   describe('userTasks', () => {
     var userTasks
     beforeEach(() => {
