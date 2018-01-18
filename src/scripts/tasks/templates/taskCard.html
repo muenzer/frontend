@@ -1,30 +1,54 @@
-<md-card>
-  <md-card-title>
-    <md-card-title-text>
-      <span class="md-headline">{{vm.task.project.name}}</span>
-      <span class="md-headline">{{vm.task.status}}</span>
-      <span class="md-subhead">{{vm.task.project.organization}}</span>
-    </md-card-title-text>
-    <md-card-title-media>
-      <div class="md-media-sm card-media"><cl-image public_id="{{vm.task.project.image}}" transformation="logo"></cl-image></div>
-    </md-card-title-media>
-  </md-card-title>
-  <md-card-content>
-    {{vm.task.name}}
-  </md-card-content>
-  <md-card-actions layout="row" layout-align="spread center">
-    <md-button ng-show="vm.task.status == 'shown'" ng-click="vm.update(vm.task.work())" class="md-raised md-primary">Accept</md-button>
-    <md-button ng-show="vm.task.status == 'working'" ng-click="vm.update(vm.task.submit())" class="md-raised md-primary">Submit</md-button>
-    <md-button ng-show="vm.task.status == 'working'" ng-click="vm.update(vm.task.cancel())" class="md-raised">Cancel</md-button>
-    <md-button ng-show="vm.task.status == 'submitted'" ng-click="vm.update(vm.task.approve())" class="md-raised md-primary">Approve</md-button>
-    <md-card-icon-actions>
-      <md-button class="md-icon-button md-ink-ripple" aria-label="toggle" ng-click="vm.expanded = !vm.expanded">
-        <md-icon ng-show="vm.expanded" md-font-icon="fa fa-angle-down fa-2x"></md-icon>
-        <md-icon ng-hide="vm.expanded" md-font-icon="fa fa-angle-up fa-2x"></md-icon>
-      </md-button>
-    </md-card-icon-actions>
-  </md-card-actions>
-  <md-card-content ng-show="vm.expanded">
-    {{vm.task.shortDescription}}
-  </md-card-content>
-</md-card>
+<div class="">
+  <md-card>
+    <md-card-header>
+      <md-card-avatar>
+        <md-icon class="md-avatar-icon" md-font-icon="fa fa-user-o fa-2x"></md-icon>
+      </md-card-avatar>
+      <md-card-header-text>
+        <span class="md-title">PROJECT NAME</span>
+        <span class="md-subhead">PROJECT OWNER</span>
+      </md-card-header-text>
+    </md-card-header>
+    <md-card-title>
+      <md-card-title-text style="width: 100%">
+        <span md-truncate class="md-headline">{{vm.task.name}}</span>
+        <span class="md-subhead">{{vm.task.status}}</span>
+        <!-- <span class="md-subhead">{{vm.task.project.organization}}</span> -->
+      </md-card-title-text>
+      <md-card-title-media>
+        <div class="md-media-sm card-media"><cl-image public_id="{{vm.task.project.image}}" transformation="logo"></cl-image></div>
+      </md-card-title-media>
+    </md-card-title>
+    <md-card-content ng-show="vm.expanded" layout-padding>
+        <md-divider></md-divider>
+        <p>{{vm.task.shortDescription}}</p>
+        <md-content ng-show="vm.task.status == 'working'">
+          <md-toolbar>
+            <div class="md-toolbar-tools">
+              <h2 md-truncate flex>Response</h2>
+            </div>
+          </md-toolbar>
+          <!-- <md-card-title-text>
+            <span class="md-subhead">Response</span>
+          </md-card-title-text> -->
+          <md-input-container class="md-block">
+            <label>Comment</label>
+            <textarea ng-model="vm.response" md-maxlength="150" rows="5" md-select-on-focus=""></textarea>
+          </md-input-container>
+          <md-button class="md-raised md-primary">Save</md-button>
+        </md-content>
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="spread center">
+      <md-button ng-show="vm.task.status == 'shown'" ng-click="vm.update(vm.task.work())" class="md-raised md-primary">Accept</md-button>
+      <md-button ng-show="vm.task.status == 'working'" ng-click="vm.update(vm.task.submit())" class="md-raised md-primary">Submit</md-button>
+      <md-button ng-show="vm.task.status == 'working'" ng-click="vm.update(vm.task.cancel())" class="md-raised">Cancel</md-button>
+      <md-button ng-show="vm.task.status == 'submitted'" ng-click="vm.update(vm.task.approve())" class="md-raised md-primary">Approve</md-button>
+      <md-card-icon-actions>
+        <md-button class="md-icon-button md-ink-ripple" aria-label="toggle" ng-click="vm.expanded = !vm.expanded">
+          <md-icon ng-show="vm.expanded" md-font-icon="fa fa-angle-down fa-2x"></md-icon>
+          <md-icon ng-hide="vm.expanded" md-font-icon="fa fa-angle-up fa-2x"></md-icon>
+        </md-button>
+      </md-card-icon-actions>
+    </md-card-actions>
+  </md-card>
+</div>

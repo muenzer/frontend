@@ -11,6 +11,10 @@ module.exports = function TaskCardController () {
   }
 
   $ctrl.$onInit = function () {
-    $ctrl.expanded = false
+    if ($ctrl.task.status === 'working') {
+      $ctrl.expanded = true
+    } else {
+      $ctrl.expanded = false
+    }
   }
 }
