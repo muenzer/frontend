@@ -333,12 +333,12 @@ describe('tasks api service', () => {
           'name': 'Create an Event Volunteer Sign Up Sheet to be posted in the Springfield Food Pantry Office and posted on the food pantry’s facebook page.',
           'status': 'working',
           'id': 2,
-          'response': {
-            'abc123': {
+          'response': [
+            {
               'comment': 'foo',
               'files': []
             }
-          }
+          ]
         }
       }
 
