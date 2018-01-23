@@ -94,6 +94,14 @@ Task.prototype.submit = function () {
   return this.post('submit')
 }
 
+Task.prototype.approve = function () {
+  return this.post('approve')
+}
+
+Task.prototype.reject = function () {
+  return this.post('reject')
+}
+
 Task.prototype.respond = function (response) {
   return this.post('respond', response)
 }
