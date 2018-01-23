@@ -33,11 +33,14 @@ describe('dialog box', () => {
         }
       }
 
-      var dialogCtrl = new DialogCtrl($mdDialog, apiService, tokenService)
+      var $rootScope = {}
+
+      var dialogCtrl = new DialogCtrl($mdDialog, apiService, tokenService, $rootScope)
 
       dialogCtrl.login()
       .then(function () {
         expect($mdDialog.hide).toHaveBeenCalled()
+        expect($rootScope.isAuthenticated).toBe(true)
         done()
       })
     })

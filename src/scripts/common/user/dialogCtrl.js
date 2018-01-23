@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function LoginDialogController ($mdDialog, api, tokenService) {
+module.exports = function LoginDialogController ($mdDialog, api, tokenService, $rootScope) {
   var vm = this
 
   vm.hide = function () {
@@ -14,6 +14,7 @@ module.exports = function LoginDialogController ($mdDialog, api, tokenService) {
 
     return api.users.login(credentials)
     .then(function (token) {
+      $rootScope.isAuthenticated = true
       return tokenService.save(token)
     })
     .then(function (token) {

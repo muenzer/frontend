@@ -16,7 +16,7 @@
           <img style="height:30px" src="assets/images/volunteerli_logo.png" alt="Volunteerli" />
         </md-button>
         <span flex></span>
-        <md-button id="profile" ui-sref="profile" class="md-icon-button" aria-label="Profile">
+        <md-button ng-if="$root.isAuthenticated" id="profile" ui-sref="profile" class="md-icon-button" aria-label="Profile">
           <md-icon md-font-icon="fa fa-user-o fa-2x"></md-icon>
         </md-button>
         <user-widget></user-widget>

@@ -14,6 +14,9 @@ angular.module('app',
     profile
   ])
   .config(IconConfig)
+  .config(function ($urlRouterProvider) {
+    $urlRouterProvider.otherwise('tasks')
+  })
 
 function IconConfig ($mdIconProvider) {
   $mdIconProvider
