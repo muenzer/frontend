@@ -1,4 +1,4 @@
 <div layout="row" layout-wrap>
-    <task-card flex="100" flex-gt-sm="33" task="task" ng-repeat="task in vm.tasks">
+    <task-card ng-show="!(vm.focus > -1) || vm.focus == $index" set-focus="vm.setFocus(task)" update="vm.update(task, update)" flex="100" flex-gt-sm="{{$index == vm.focus ? 100:33}}" task="task" ng-repeat="task in vm.tasks">
     </task-card>
 </div>

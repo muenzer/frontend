@@ -5,9 +5,7 @@ module.exports = function setRoute ($stateProvider) {
     {
       name: 'tasks',
       url: '/tasks',
-      templateUrl: 'templates/tasks.html',
-      controller: 'TasksController',
-      controllerAs: 'vm',
+      component: 'tasks',
       title: 'Tasks',
       resolve: {
         api: 'api',

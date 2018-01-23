@@ -8,9 +8,15 @@ var app = require('angular').module('tasks', [router.default, api])
 var routeConfig = require('./tasks.routes')
 app.config(routeConfig)
 
-app.controller('TasksController', function (tasks) {
-  var $ctrl = this
-  $ctrl.tasks = tasks
+var TasksController = require('./tasks.controller')
+
+app.component('tasks', {
+  templateUrl: 'templates/tasks.html',
+  controller: TasksController,
+  controllerAs: 'vm',
+  bindings: {
+    tasks: '<'
+  }
 })
 
 var TaskCardController = require('./taskCard.controller')
@@ -19,7 +25,9 @@ app.component('taskCard', {
   controller: TaskCardController,
   controllerAs: 'vm',
   bindings: {
-    task: '<'
+    task: '<',
+    setFocus: '&',
+    update: '&'
   }
 })
 
