@@ -16,6 +16,11 @@ function TasksService ($http, apiroot) {
   root = apiroot
 }
 
+function catchError (err) {
+  console.log(err.message)
+  return Promise.resolve(null)
+}
+
 TasksService.prototype.getList = function () {
   return httpService.get(joinUrlElements(root, 'tasks'))
   .then(function (response) {
@@ -27,6 +32,7 @@ TasksService.prototype.getList = function () {
 
     return tasks
   })
+  .catch(catchError)
 }
 
 TasksService.prototype.get = function (id) {
@@ -34,6 +40,7 @@ TasksService.prototype.get = function (id) {
   .then(function (response) {
     return new Task(response.data.task)
   })
+  .catch(catchError)
 }
 
 TasksService.prototype.userTasks = function () {
@@ -47,6 +54,7 @@ TasksService.prototype.userTasks = function () {
 
     return tasks
   })
+  .catch(catchError)
 }
 
 function Task (response) {
@@ -71,6 +79,7 @@ Task.prototype.post = function (method, data) {
   .then(function (response) {
     return new Task(response.data.task)
   })
+  .catch(catchError)
 }
 
 Task.prototype.work = function () {

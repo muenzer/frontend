@@ -64,6 +64,21 @@ describe('tasks api service', () => {
         done()
       })
     })
+
+    it('returns null when there is an error', (done) => {
+      $http.get.and.returnValue(Promise.reject(new Error('User is not authorized to access this resource')))
+      tasksService = new TasksService($http, 'apiroot')
+
+      tasksService.getList()
+      .then((tasks) => {
+        expect(tasks).toBe(null)
+        done()
+      })
+      .catch((err) => {
+        fail(err)
+        done()
+      })
+    })
   })
 
   describe('get', () => {

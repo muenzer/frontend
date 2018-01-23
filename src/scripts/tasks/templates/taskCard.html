@@ -28,14 +28,12 @@
               <h2 md-truncate flex>Response</h2>
             </div>
           </md-toolbar>
-          <!-- <md-card-title-text>
-            <span class="md-subhead">Response</span>
-          </md-card-title-text> -->
+          {{vm.task.response}}
           <md-input-container class="md-block">
             <label>Comment</label>
-            <textarea ng-model="vm.response" md-maxlength="150" rows="5" md-select-on-focus=""></textarea>
+            <textarea ng-model="vm.response.comment" md-maxlength="150" rows="5" md-select-on-focus=""></textarea>
           </md-input-container>
-          <md-button class="md-raised md-primary">Save</md-button>
+          <md-button class="md-raised md-primary" ng-click="vm.update(vm.task.respond(vm.response))">Save</md-button>
         </md-content>
     </md-card-content>
     <md-card-actions layout="row" layout-align="spread center">
