@@ -3,4 +3,18 @@
   <h2>Name:</h2> {{vm.profile.name}}
 </div>
 
-<tasks tasks='vm.tasks'></tasks>
+<div ng-if="vm.tasks.length > 0">
+  <h2>Tasks</h2>
+  <tasks tasks='vm.tasks'></tasks>
+</div>
+
+<div ng-if="vm.projects.length > 0">
+  <h2>Projects</h2>
+  <div ng-repeat="(id, tasks) in vm.projects | groupBy: 'projectId'">
+    <h3>{{tasks[0].project.name}} ({{tasks.length}})</h3>
+    <li ng-repeat="(status, count) in tasks | countBy: 'status'" >
+      {{ status }}: {{ count / tasks.length * 100 | number:0}}%
+    </li>
+    <!-- <tasks tasks='tasks'></tasks> -->
+  </div>
+</div>

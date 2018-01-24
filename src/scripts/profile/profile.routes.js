@@ -16,6 +16,9 @@ module.exports = function setRoute ($stateProvider) {
         },
         tasks: function (api) {
           return api.tasks.userTasks()
+        },
+        projects: function (api) {
+          return api.tasks.projectTasks()
         }
       }
     }
