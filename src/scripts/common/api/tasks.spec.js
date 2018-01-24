@@ -455,4 +455,57 @@ describe('tasks api service', () => {
       })
     })
   })
+
+  describe('projectTasks', () => {
+    var projectTasks
+    beforeEach(() => {
+      var mockTasks = {
+        'tasks': [
+          {
+            'name': 'Create an Event Volunteer Sign Up Sheet to be posted in the Springfield Food Pantry Office and posted on the food pantry’s facebook page.',
+            'status': 'shown',
+            'id': 1
+          },
+          {
+            'name': 'Make a seating chart',
+            'status': 'shown',
+            'id': 2
+          }
+        ],
+        'count': 2
+      }
+
+      $http = jasmine.createSpyObj('http', ['get'])
+      $http.get.and.returnValue(Promise.resolve({data: mockTasks}))
+      tasksService = new TasksService($http, 'apiroot')
+      projectTasks = tasksService.projectTasks()
+    })
+
+    it('provides a project tasks method', () => {
+      expect(tasksService.projectTasks).toBeDefined()
+    })
+
+    it('returns a promise', () => {
+      expect(projectTasks.then).toBeDefined()
+      expect(projectTasks.catch).toBeDefined()
+    })
+
+    it('calls the $http get service', (done) => {
+      projectTasks
+      .then(function (response) {
+        expect($http.get).toHaveBeenCalled()
+        expect($http.get).toHaveBeenCalledWith('apiroot/users/projects')
+        done()
+      })
+    })
+
+    it('returns an array of tasks', (done) => {
+      projectTasks
+      .then(function (tasks) {
+        expect(Array.isArray(tasks)).toBeTruthy()
+        expect(tasks[0].constructor.name).toBe('Task')
+        done()
+      })
+    })
+  })
 })

@@ -57,6 +57,20 @@ TasksService.prototype.userTasks = function () {
   .catch(catchError)
 }
 
+TasksService.prototype.projectTasks = function () {
+  return httpService.get(joinUrlElements(root, 'users', 'projects'))
+  .then(function (response) {
+    var tasks = response.data.tasks
+
+    for (var i = 0, len = tasks.length; i < len; i++) {
+      tasks[i] = new Task(tasks[i])
+    }
+
+    return tasks
+  })
+  .catch(catchError)
+}
+
 function Task (response) {
   var task = this
   Object.keys(response).forEach(function (key) {
