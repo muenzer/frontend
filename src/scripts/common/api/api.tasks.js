@@ -2,11 +2,7 @@
 
 module.exports = TasksService
 
-var joinUrlElements = function () {
-  var re1 = new RegExp('^\\/|\\/$', 'g')
-  var elts = Array.prototype.slice.call(arguments)
-  return elts.map(function (element) { return element.toString().replace(re1, '') }).join('/')
-}
+var joinUrlElements = require('./join')
 
 var httpService
 var root
