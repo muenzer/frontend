@@ -1,0 +1,32 @@
+<div layout="column" flex layout-fill ng-cloak>
+
+  <md-toolbar md-scroll-shrink>
+    <div class="md-toolbar-tools">Projects</div>
+  </md-toolbar>
+
+  <md-content style="height: 600px;">
+
+    <section ng-repeat="project in vm.projects">
+      <md-subheader class="md-primary">
+        <md-button class="md-fab md-fab-right" aria-label="FAB">
+            <md-icon md-font-icon="fa fa-plus"></md-icon>
+            <md-tooltip md-direction="bottom">Add Task</md-tooltip>
+          </md-button>
+        {{project.name}}
+      </md-subheader>
+      <md-list layout-padding>
+        <md-list-item class="md-3-line" ng-repeat="task in project.tasks">
+            <img ng-src="{{message.face}}" class="md-avatar" alt="{{message.who}}">
+            <div class="md-list-item-text">
+              <h3>{{message.what}}</h3>
+              <h4>{{message.who}}</h4>
+              <p>
+                {{message.notes}}
+              </p>
+            </div>
+        </md-list-item>
+      </md-list>
+    </section>
+
+  </md-content>
+</div>
