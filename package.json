@@ -36,6 +36,8 @@
     "angular-filter": "^0.5.17",
     "angular-http-auth": "^1.5.0",
     "angular-material": "^1.1.5",
-    "angular-messages": "^1.6.8"
+    "angular-messages": "^1.6.8",
+    "angular-schema-form": "^0.8.13",
+    "angular-schema-form-material": "github:Tradesmarter/angular-schema-form-material#develop"
   }
 }

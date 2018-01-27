@@ -8,7 +8,7 @@
 
     <section ng-repeat="project in vm.projects">
       <md-subheader class="md-primary">
-        <md-button class="md-fab md-fab-right" aria-label="FAB">
+        <md-button ng-click="vm.dialog.open()" class="md-fab md-fab-right" aria-label="FAB">
             <md-icon md-font-icon="fa fa-plus"></md-icon>
             <md-tooltip md-direction="bottom">Add Task</md-tooltip>
           </md-button>
