@@ -17,7 +17,8 @@ module.exports = function ($mdDialog) {
 
   return service
 
-  function open () {
+  function open (project) {
+    dialog.locals = {project: project}
     return $mdDialog.show(dialog)
   }
 }

@@ -1,7 +1,9 @@
 'use strict'
 
-module.exports = function NewTaskDialogController ($mdDialog, api) {
+module.exports = function NewTaskDialogController ($mdDialog, api, project, $scope) {
   var vm = this
+
+  vm.project = project
 
   vm.schema = {
     'type': 'object',
@@ -71,20 +73,24 @@ module.exports = function NewTaskDialogController ($mdDialog, api) {
       'placeholder': 'Provide a short description'
     },
     {
-      'key': 'actions',
-      'add': 'New',
-      'items': [
-        'actions[].name',
-        'actions[].type'
-      ]
-    },
-    {
-      'key': 'files',
-      'add': 'New',
-      'items': [
-        'files[].file'
-      ]
+      'type': 'submit',
+      'title': 'OK'
     }
+    // {
+    //   'key': 'actions',
+    //   'add': 'New',
+    //   'items': [
+    //     'actions[].name',
+    //     'actions[].type'
+    //   ]
+    // },
+    // {
+    //   'key': 'files',
+    //   'add': 'New',
+    //   'items': [
+    //     'files[].file'
+    //   ]
+    // }
   ]
 
   vm.model = {
@@ -94,12 +100,17 @@ module.exports = function NewTaskDialogController ($mdDialog, api) {
   vm.close = function () {
     $mdDialog.cancel()
   }
-  vm.submit = function (task, project) {
-    task.projectId = project.projectId
-    task.project = project
-    return api.tasks.create(task)
-    .then((response) => {
-      $mdDialog.hide(response)
-    })
+  vm.submit = function (form) {
+    $scope.$broadcast('schemaFormValidate')
+
+    if (form.$valid) {
+      var task = vm.model
+      task.projectId = vm.project.projectId
+      task.project = vm.project
+      return api.tasks.create(task)
+      .then((response) => {
+        $mdDialog.hide(response)
+      })
+    }
   }
 }
