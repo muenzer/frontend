@@ -15,6 +15,67 @@ describe('tasks api service', () => {
     expect(typeof tasksService).toBe('object')
   })
 
+  describe('create', () => {
+    var create
+
+    beforeEach(() => {
+      var mockTask = {
+        'task': {
+          'name': 'It is a project',
+          'projectId': '123',
+          'client': 'xyz'
+        }
+      }
+
+      $http = jasmine.createSpyObj('http', ['post'])
+      $http.post.and.returnValue(Promise.resolve({data: mockTask}))
+      tasksService = new TasksService($http, 'apiroot')
+
+      create = tasksService.create({data: 'foo'})
+    })
+
+    it('provides a create method', () => {
+      expect(tasksService.create).toBeDefined()
+    })
+
+    it('returns a promise', () => {
+      expect(create.then).toBeDefined()
+      expect(create.catch).toBeDefined()
+    })
+
+    it('calls the $http post service', (done) => {
+      create
+      .then(function (response) {
+        expect($http.post).toHaveBeenCalled()
+        expect($http.post).toHaveBeenCalledWith('apiroot/tasks', {data: 'foo'})
+        done()
+      })
+    })
+
+    it('returns a task', (done) => {
+      create
+      .then(function (task) {
+        expect(task.constructor.name).toBe('Task')
+        done()
+      })
+    })
+
+    it('returns null when there is an error', (done) => {
+      $http.post.and.returnValue(Promise.reject(new Error('User is not authorized to access this resource')))
+      tasksService = new TasksService($http, 'apiroot')
+
+      tasksService.create()
+      .then((project) => {
+        expect(project).toBe(null)
+        done()
+      })
+      .catch((err) => {
+        fail(err)
+        done()
+      })
+    })
+  })
+
   describe('getList', () => {
     beforeEach(() => {
       var mockTasks = {
@@ -136,6 +197,69 @@ describe('tasks api service', () => {
         expect(task.work).toBeDefined()
         expect(task.cancel).toBeDefined()
         expect(task.submit).toBeDefined()
+        done()
+      })
+    })
+  })
+
+  describe('task method show', () => {
+    var show
+
+    beforeEach(() => {
+      var mockTask = {
+        'task':
+        {
+          'name': 'Create an Event Volunteer Sign Up Sheet to be posted in the Springfield Food Pantry Office and posted on the food pantry’s facebook page.',
+          'status': 'ready',
+          'id': 1
+        }
+      }
+
+      var mockTaskShown = {
+        'task':
+        {
+          'name': 'Create an Event Volunteer Sign Up Sheet to be posted in the Springfield Food Pantry Office and posted on the food pantry’s facebook page.',
+          'status': 'shown',
+          'id': 1
+        }
+      }
+
+      $http = jasmine.createSpyObj('http', ['get', 'post'])
+      $http.get.and.returnValue(Promise.resolve({data: mockTask}))
+      $http.post.and.returnValue(Promise.resolve({data: mockTaskShown}))
+      tasksService = new TasksService($http, 'apiroot')
+
+      show = tasksService.get(1)
+      .then(function (task) {
+        return task.show()
+      })
+    })
+
+    it('returns a promise', () => {
+      expect(show.then).toBeDefined()
+      expect(show.catch).toBeDefined()
+    })
+
+    it('calls the $http post service', (done) => {
+      show
+      .then(function (response) {
+        expect($http.post).toHaveBeenCalled()
+        expect($http.post).toHaveBeenCalledWith('apiroot/tasks/1/show')
+        done()
+      })
+      .catch((err) => {
+        console.log(err)
+        fail()
+        done()
+      })
+    })
+
+    it('it returns a task type', (done) => {
+      show
+      .then(function (task) {
+        expect(task).toBeTruthy()
+        expect(task.constructor.name).toBe('Task')
+        expect(task.status).toBe('shown')
         done()
       })
     })

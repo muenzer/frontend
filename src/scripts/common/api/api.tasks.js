@@ -17,6 +17,14 @@ function catchError (err) {
   return Promise.resolve(null)
 }
 
+TasksService.prototype.create = function (data) {
+  return httpService.post(joinUrlElements(root, 'tasks'), data)
+  .then((response) => {
+    return new Task(response)
+  })
+  .catch(catchError)
+}
+
 TasksService.prototype.getList = function () {
   return httpService.get(joinUrlElements(root, 'tasks'))
   .then(function (response) {
@@ -91,6 +99,11 @@ Task.prototype.post = function (method, data) {
   })
   .catch(catchError)
 }
+
+Task.prototype.show = function () {
+  return this.post('show')
+}
+
 
 Task.prototype.work = function () {
   return this.post('work')
